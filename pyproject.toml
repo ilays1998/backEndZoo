@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "backendzoo"
+version = "0.1.0"
+description = ""
+authors = ["ilay <ilaysoffer@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pendulum = "^2.1.2"
+strawberry-graphql = {extras = ["debug-server"], version = "^0.206.0"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
