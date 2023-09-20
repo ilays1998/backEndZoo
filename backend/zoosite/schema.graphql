@@ -6,6 +6,14 @@ type Animal implements Node {
   metadata: AnimalMetadata!
 }
 
+input AnimalInput {
+  name: String!
+  image: url!
+  age: Int!
+  metadataId: ID = null
+  metadataFamilyName: String = null
+}
+
 type AnimalMetadata implements Node {
   id: ID!
   domain: String!
@@ -16,12 +24,27 @@ type AnimalMetadata implements Node {
   family: String!
 }
 
+input MetadataInput {
+  domain: String!
+  kingdom: String!
+  pyhlum: String!
+  Class: String!
+  superfamily: String!
+  family: String!
+}
+
+type Mutation {
+  addMetadata(input: MetadataInput!): AnimalMetadata!
+  addAnimal(input: AnimalInput!): Animal!
+}
+
 interface Node {
   id: ID!
 }
 
 type Query {
   animals: [Animal!]!
+  nodes: [Node!]!
 }
 
 scalar url
