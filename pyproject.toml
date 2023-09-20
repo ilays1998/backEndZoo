@@ -2,12 +2,13 @@
 name = "backendzoo"
 version = "0.1.0"
 description = ""
-authors = ["Your Name <you@example.com>"]
+authors = ["ilay <ilaysoffer@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-conan = "^2.0.10"
+strawberry-graphql = "^0.206.0"
+django = "^4.2.5"
 
 
 [build-system]
