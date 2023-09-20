@@ -1,0 +1,27 @@
+type Animal implements Node {
+  id: ID!
+  name: String!
+  image: url!
+  age: Int!
+  metadata: AnimalMetadata!
+}
+
+type AnimalMetadata implements Node {
+  id: ID!
+  domain: String!
+  kingdom: String!
+  pyhlum: String!
+  Class: String!
+  superfamily: String!
+  family: String!
+}
+
+interface Node {
+  id: ID!
+}
+
+type Query {
+  animals: [Animal!]!
+}
+
+scalar url
