@@ -1,3 +1,8 @@
+type AddAnimalPayload {
+  data: Animal
+  error: String
+}
+
 type Animal implements Node {
   id: ID!
   name: String!
@@ -35,7 +40,7 @@ input MetadataInput {
 
 type Mutation {
   addMetadata(input: MetadataInput!): AnimalMetadata!
-  addAnimal(input: AnimalInput!): Animal!
+  addAnimal(input: AnimalInput!): AddAnimalPayload!
 }
 
 interface Node {
@@ -44,7 +49,6 @@ interface Node {
 
 type Query {
   animals: [Animal!]!
-  nodes: [Node!]!
 }
 
 scalar url

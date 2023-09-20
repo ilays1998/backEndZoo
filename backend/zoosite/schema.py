@@ -74,16 +74,9 @@ def get_metadata() -> list[AnimalMetadata]:
     return [AnimalMetadata.from_orm(obj) for obj in metadata]
 
 
-def get_nodes() -> list[Node]:
-    result = get_animals()
-    result += get_metadata()
-    return result
-
-
 @strawberry.type
 class Query:
     animals: list[Animal] = strawberry.field(resolver=get_animals)
-    nodes: list[Node] = strawberry.field(resolver=get_nodes)
 
 
 @strawberry.input
@@ -105,6 +98,11 @@ class AnimalInput:
     metadata_family_name: Optional[str] = None
 
 
+@strawberry.type()
+class AddAnimalPayload:
+    data: Animal | None = None
+    error: str | None = None
+
 
 @strawberry.type
 class Mutation:
@@ -124,10 +122,10 @@ class Mutation:
         return AnimalMetadata.from_orm(new_metadat)
 
     @strawberry.mutation
-    def add_animal(self, input: AnimalInput) -> Animal:
+    def add_animal(self, input: AnimalInput) -> AddAnimalPayload:
         # Create a new Animal instance with the provided input data
         if input.metadata_id is None and input.metadata_family_name is None:
-            raise ObjectDoesNotExist("you have to give either an id or family_name")
+            AddAnimalPayload(error="you have to give either an id or family_name")
         if input.metadata_id is not None:
             metadata = models.Metadata.objects.get(pk=input.metadata_id)
         else:
@@ -141,7 +139,7 @@ class Mutation:
 
         new_animal.save()
 
-        return Animal.from_orm(new_animal)
+        return AddAnimalPayload(data=Animal.from_orm(new_animal))
 
 
 schema = strawberry.Schema(query=Query, mutation=Mutation)
