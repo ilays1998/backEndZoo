@@ -95,6 +95,12 @@ class AddMetaDataPayload:
     error: str | None = None
 
 
+@strawberry.type()
+class RemoveMetaDataPayload:
+    data: str | None = None
+    error: str | None = None
+
+
 @strawberry.input
 class AnimalInput:
     name: str
@@ -112,7 +118,7 @@ class AddAnimalPayload:
 
 @strawberry.type
 class Mutation:
-    @strawberry.field
+    @strawberry.mutation
     def add_metadata(self, input: MetadataInput) -> \
             AddAnimalPayload:
         new_metadat = models.Metadata.objects.create(
@@ -126,6 +132,17 @@ class Mutation:
         new_metadat.save()
 
         return AddAnimalPayload(data=AnimalMetadata.from_orm(new_metadat))
+
+    @strawberry.mutation
+    def remove_metadata(self, pk: int) -> RemoveMetaDataPayload:
+        try:
+            meta = models.Metadata.objects.get(pk=pk)
+        except:
+            return RemoveMetaDataPayload(error="There isn't a Metadata object with this pk in the database")
+
+        data = meta.__str__()
+        meta.delete()
+        return RemoveMetaDataPayload(data=("delete: " + data))
 
     @strawberry.mutation
     def add_animal(self, input: AnimalInput) -> AddAnimalPayload:
