@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import time
 import typing
 # merge to main
 from pathlib import Path
@@ -65,6 +66,7 @@ class Animal(Node):
 
 
 def get_animals() -> list[Animal]:
+    #time.sleep(7)
     animals = models.Animal.objects.all()
     return [Animal.from_orm(obj) for obj in animals]
 
