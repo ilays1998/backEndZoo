@@ -39,7 +39,7 @@ input MetadataInput {
 }
 
 type Mutation {
-  addMetadata(input: MetadataInput!): AnimalMetadata!
+  addMetadata(input: MetadataInput!): AddAnimalPayload!
   addAnimal(input: AnimalInput!): AddAnimalPayload!
 }
 

@@ -89,6 +89,12 @@ class MetadataInput:
     family: str
 
 
+@strawberry.type()
+class AddMetaDataPayload:
+    data: AnimalMetadata | None = None
+    error: str | None = None
+
+
 @strawberry.input
 class AnimalInput:
     name: str
@@ -108,7 +114,7 @@ class AddAnimalPayload:
 class Mutation:
     @strawberry.field
     def add_metadata(self, input: MetadataInput) -> \
-            AnimalMetadata:
+            AddAnimalPayload:
         new_metadat = models.Metadata.objects.create(
             domain=input.domain,
             kingdom=input.kingdom,
@@ -119,7 +125,7 @@ class Mutation:
 
         new_metadat.save()
 
-        return AnimalMetadata.from_orm(new_metadat)
+        return AddAnimalPayload(data=AnimalMetadata.from_orm(new_metadat))
 
     @strawberry.mutation
     def add_animal(self, input: AnimalInput) -> AddAnimalPayload:
