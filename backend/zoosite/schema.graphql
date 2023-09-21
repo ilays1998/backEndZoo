@@ -1,9 +1,22 @@
+type AddAnimalPayload {
+  data: Animal
+  error: String
+}
+
 type Animal implements Node {
   id: ID!
   name: String!
   image: url!
   age: Int!
   metadata: AnimalMetadata!
+}
+
+input AnimalInput {
+  name: String!
+  image: url!
+  age: Int!
+  metadataId: ID = null
+  metadataFamilyName: String = null
 }
 
 type AnimalMetadata implements Node {
@@ -14,6 +27,20 @@ type AnimalMetadata implements Node {
   Class: String!
   superfamily: String!
   family: String!
+}
+
+input MetadataInput {
+  domain: String!
+  kingdom: String!
+  pyhlum: String!
+  Class: String!
+  superfamily: String!
+  family: String!
+}
+
+type Mutation {
+  addMetadata(input: MetadataInput!): AnimalMetadata!
+  addAnimal(input: AnimalInput!): AddAnimalPayload!
 }
 
 interface Node {
