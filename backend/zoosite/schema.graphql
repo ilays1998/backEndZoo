@@ -40,7 +40,8 @@ input MetadataInput {
 
 type Mutation {
   addMetadata(input: MetadataInput!): AddAnimalPayload!
-  removeMetadata(pk: Int!): RemoveMetaDataPayload!
+  removeMetadataById(pk: Int!): RemoveMetaDataPayload!
+  removeAnimalByName(name: String!): RemoveMetaDataPayload!
   addAnimal(input: AnimalInput!): AddAnimalPayload!
 }
 

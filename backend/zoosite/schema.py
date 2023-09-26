@@ -66,7 +66,7 @@ class Animal(Node):
 
 
 def get_animals() -> list[Animal]:
-    #time.sleep(7)
+    #time.sleep(5)
     animals = models.Animal.objects.all()
     return [Animal.from_orm(obj) for obj in animals]
 
@@ -136,11 +136,22 @@ class Mutation:
         return AddAnimalPayload(data=AnimalMetadata.from_orm(new_metadat))
 
     @strawberry.mutation
-    def remove_metadata(self, pk: int) -> RemoveMetaDataPayload:
+    def remove_metadata_by_id(self, pk: int) -> RemoveMetaDataPayload:
         try:
             meta = models.Metadata.objects.get(pk=pk)
         except:
             return RemoveMetaDataPayload(error="There isn't a Metadata object with this pk in the database")
+
+        data = meta.__str__()
+        meta.delete()
+        return RemoveMetaDataPayload(data=("delete: " + data))
+
+    @strawberry.mutation
+    def remove_Animal_by_name(self, name: str) -> RemoveMetaDataPayload:
+        try:
+            meta = models.Animal.objects.get(name=name)
+        except:
+            return RemoveMetaDataPayload(error="There isn't a Metadata object with this name in the database")
 
         data = meta.__str__()
         meta.delete()
